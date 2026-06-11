@@ -1,0 +1,288 @@
+# ==========================================================
+# Universidad de Guanajuato
+# Profesora Lesly Flores
+#Estudiante Maria Concepcion Cadena Sanchez
+# ==========================================================
+# Regresión logística binaria (logit)
+# Tema: Percepción del trabajo doméstico y de cuidados
+#       no remunerado con perspectiva de género
+# ==========================================================
+
+# ── LIMPIAR ENTORNO ───────────────────────────────────────
+# Esto evita conflictos con objetos de sesiones anteriores
+rm(list = ls())
+
+
+# ── PASO 1: INSTALAR Y CARGAR LIBRERÍAS ───────────────────
+# Quita el # solo la primera vez que los instales
+
+# install.packages("dplyr")
+# install.packages("ggplot2")
+
+library(dplyr)
+library(ggplot2)
+
+
+# ── PASO 2: CARGAR LOS DATOS MANUALMENTE ─────────────────
+# Datos propios de levantamiento (n = 42)
+#
+# Variables dicotómicas (0 = ausencia, 1 = presencia):
+#   G         = género femenino
+#   H         = tiene hijes
+#   T         = trabaja fuera de casa
+#   E         = estudia actualmente
+#   resultado = alta carga subjetiva
+#              (impacto en bienestar >= 7 O estrés >= 7)
+#
+# Variables para las gráficas descriptivas:
+#   genero            = texto (Femenino / Masculino)
+#   estres            = escala 0-10
+#   impacto_bienestar = escala 0-10
+#   frecuencia_impide = qué tan seguido el trabajo doméstico
+#                       impide otras actividades
+
+datos <- data.frame(
+  G = c(1,1,0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1),
+  H = c(0,1,0,1,1,1,1,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1),
+  T = c(0,0,1,1,1,1,1,0,1,0,1,1,0,1,0,1,0,1,1,1,0,1,1,0,1,0,0,0,1,0,0,0,1,1,0,1,1,1,1,1,1,1),
+  E = c(1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,0,1,0,0,1,1,1,1,0,0,1,1,0,0,0,1,1,1,0,0,1,1,1,1,0,0),
+  resultado = c(0,0,0,1,1,1,0,1,0,0,0,1,0,0,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,0,0,0,1,1),
+  
+  # Variables para gráficas descriptivas
+  genero = c(
+    "Femenino","Femenino","Masculino","Femenino","Femenino","Femenino",
+    "Femenino","Masculino","Femenino","Femenino","Femenino","Femenino",
+    "Masculino","Femenino","Femenino","Femenino","Femenino","Femenino",
+    "Femenino","Femenino","Femenino","Femenino","Femenino","Femenino",
+    "Femenino","Femenino","Femenino","Femenino","Masculino","Femenino",
+    "Femenino","Femenino","Femenino","Femenino","Femenino","Femenino",
+    "Femenino","Femenino","Masculino","Femenino","Femenino","Femenino"
+  ),
+  estres = c(0,5,2,8,10,8,4,2,0,2,3,10,0,6,2,10,10,4,3,10,5,10,6,9,10,10,8,10,7,4,8,0,10,5,10,5,10,5,5,4,7,7),
+  impacto_bienestar = c(1,5,0,8,2,10,4,9,0,2,1,2,2,6,7,10,5,3,8,7,3,8,10,6,10,8,7,5,5,6,7,0,7,5,7,8,7,3,4,2,8,6),
+  frecuencia_impide = c(
+    "Nunca","Casi siempre","Rara vez","A veces","Casi siempre","Casi siempre",
+    "Rara vez","Rara vez","Nunca","Rara vez","Rara vez","A veces",
+    "Rara vez","A veces","Rara vez","Siempre","Casi siempre","A veces",
+    "Rara vez","Casi siempre","Rara vez","Casi siempre","Siempre","A veces",
+    "Siempre","Rara vez","A veces","Rara vez","Casi siempre","A veces",
+    "Casi siempre","Rara vez","Casi siempre","A veces","A veces","A veces",
+    "Casi siempre","Rara vez","A veces","Rara vez","Casi siempre","Casi siempre"
+  )
+)
+
+View(datos)
+
+
+# ── PASO 3: AJUSTAR EL MODELO LOGIT ──────────────────────
+# glm() con family = binomial("logit")
+# resultado = variable dependiente
+# G, H, T, E = variables independientes
+
+modelo <- glm(resultado ~ G + H + T + E,
+              data = datos, family = binomial("logit"))
+
+# Resultados: coeficientes, errores estándar, valores z y p
+summary(modelo)
+
+
+# ── PASO 4: PREDICCIÓN DE PROBABILIDADES ─────────────────
+
+# Opción 1: Escenarios manuales
+# Escenario 1: hombre, sin hijes, no trabaja, no estudia
+# Escenario 2: mujer, con hijes, trabaja, estudia
+
+escenarios <- data.frame(
+  G = c(0, 1),
+  H = c(0, 1),
+  T = c(0, 1),
+  E = c(0, 1)
+)
+
+logit_prediccion      <- predict(modelo, newdata = escenarios, type = "link")
+probabilidad_prediccion <- exp(logit_prediccion) / (1 + exp(logit_prediccion))
+probabilidad_prediccion
+
+
+# Opción 2: Todas las combinaciones posibles
+escenarios_todos <- expand.grid(
+  G = c(0, 1),
+  H = c(0, 1),
+  T = c(0, 1),
+  E = c(0, 1)
+)
+
+escenarios_todos$prob <- predict(modelo,
+                                 newdata = escenarios_todos,
+                                 type = "response")
+View(escenarios_todos)
+
+
+# ── PASO 5: GRÁFICA 1 — PROBABILIDAD PREDICHA POR GÉNERO ─
+# Barras agrupadas: probabilidad de alta carga según género,
+# si estudia y si tiene hijes
+
+pred_genero <- expand.grid(G = c(0,1), H = c(0,1), T = 0, E = c(0,1))
+pred_genero$prob <- predict(modelo, newdata = pred_genero, type = "response")
+pred_genero <- pred_genero %>%
+  mutate(
+    Género  = if_else(G == 1, "Femenino", "Masculino"),
+    Estudia = if_else(E == 1, "Sí estudia", "No estudia"),
+    Hijes   = if_else(H == 1, "Con hijes", "Sin hijes")
+  )
+
+grafica1 <- ggplot(pred_genero, aes(x = Estudia, y = prob, fill = Género)) +
+  geom_col(position = "dodge", width = 0.6) +
+  facet_wrap(~ Hijes) +
+  scale_fill_manual(values = c("Femenino" = "#C75B7A", "Masculino" = "#7B8FA1")) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     limits = c(0, 1)) +
+  labs(
+    title    = "Probabilidad predicha de alta carga de trabajo doméstico",
+    subtitle = "Según género, si estudia y si tiene hijes",
+    x        = "¿Estudia actualmente?",
+    y        = "Probabilidad de alta carga (%)",
+    caption  = "Modelo: regresión logística binaria. Fuente: datos propios (n = 42)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title      = element_text(face = "bold", size = 13),
+    plot.subtitle   = element_text(color = "grey40"),
+    legend.position = "bottom"
+  )
+
+print(grafica1)
+
+ggsave("logit_probabilidad_genero.png",
+       width = 8, height = 5, dpi = 300, bg = "white")
+
+
+# ── PASO 6: GRÁFICA 2 — EFECTOS DE CADA VARIABLE ─────────
+# Barras horizontales: coeficiente de cada variable
+# Rosa = aumenta la probabilidad, azul = la reduce
+
+coef_df <- data.frame(
+  variable    = c("Género femenino (G)", "Tiene hijes (H)",
+                  "Trabaja fuera (T)",   "Estudia (E)"),
+  coeficiente = coef(modelo)[-1],
+  error_std   = summary(modelo)$coefficients[-1, 2]
+)
+
+grafica2 <- ggplot(coef_df, aes(x = reorder(variable, coeficiente),
+                                y = coeficiente,
+                                fill = coeficiente > 0)) +
+  geom_col(width = 0.6) +
+  geom_errorbar(aes(ymin = coeficiente - error_std,
+                    ymax = coeficiente + error_std),
+                width = 0.2, color = "grey30") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey50") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("TRUE" = "#C75B7A", "FALSE" = "#7B8FA1"),
+    labels = c("TRUE" = "Aumenta la probabilidad",
+               "FALSE" = "Reduce la probabilidad"),
+    name = ""
+  ) +
+  labs(
+    title    = "Efecto de cada variable sobre la probabilidad de alta carga",
+    subtitle = "Coeficientes del modelo logit con barras de error estándar",
+    x        = NULL,
+    y        = "Coeficiente logit",
+    caption  = "Barras de error = ± 1 error estándar. Fuente: datos propios (n = 42)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title      = element_text(face = "bold", size = 13),
+    plot.subtitle   = element_text(color = "grey40"),
+    legend.position = "bottom"
+  )
+
+print(grafica2)
+
+ggsave("logit_efectos_variables.png",
+       width = 8, height = 5, dpi = 300, bg = "white")
+
+
+# ── PASO 7: GRÁFICA 3 — BOXPLOT ───────────────────────────
+# Compara la distribución del nivel de estrés entre géneros
+# Cuándo usarla: para comparar distribuciones entre grupos
+
+grafica3 <- ggplot(datos, aes(x = genero, y = estres, fill = genero)) +
+  geom_boxplot(width = 0.5, alpha = 0.8) +
+  scale_fill_manual(values = c("Femenino" = "#C75B7A", "Masculino" = "#7B8FA1")) +
+  labs(
+    title    = "Distribución del nivel de estrés por género",
+    subtitle = "Generado por el trabajo doméstico y de cuidados no remunerado",
+    x        = NULL,
+    y        = "Nivel de estrés (0 = nada, 10 = mucho)",
+    caption  = "Fuente: datos propios (n = 42)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title      = element_text(face = "bold", size = 13),
+    plot.subtitle   = element_text(color = "grey40"),
+    legend.position = "none"
+  )
+
+print(grafica3)
+
+ggsave("boxplot_estres_genero.png",
+       width = 7, height = 5, dpi = 300, bg = "white")
+
+
+# ── PASO 8: GRÁFICA 4 — BARRAS APILADAS ───────────────────
+# Frecuencia con que el trabajo doméstico impide otras actividades
+# comparada entre hombres y mujeres
+# Cuándo usarla: para comparar composición de categorías entre grupos
+
+datos_apilada <- datos %>%
+  count(genero, frecuencia_impide) %>%
+  group_by(genero) %>%
+  mutate(porcentaje = n / sum(n) * 100) %>%
+  ungroup() %>%
+  mutate(
+    frecuencia_impide = factor(
+      frecuencia_impide,
+      levels = c("Nunca", "Rara vez", "A veces", "Casi siempre", "Siempre")
+    )
+  )
+
+grafica4 <- ggplot(datos_apilada,
+                   aes(x = genero, y = porcentaje, fill = frecuencia_impide)) +
+  geom_col(width = 0.6) +
+  scale_fill_manual(
+    values = c(
+      "Nunca"        = "#D9EAD3",
+      "Rara vez"     = "#93C47D",
+      "A veces"      = "#F6B26B",
+      "Casi siempre" = "#E06666",
+      "Siempre"      = "#85200C"
+    ),
+    name = "Frecuencia"
+  ) +
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(
+    title    = "Frecuencia con que el trabajo doméstico impide otras actividades",
+    subtitle = "Comparación por género (% dentro de cada grupo)",
+    x        = NULL,
+    y        = "Porcentaje (%)",
+    caption  = "Fuente: datos propios (n = 42)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title      = element_text(face = "bold", size = 13),
+    plot.subtitle   = element_text(color = "grey40"),
+    legend.position = "right"
+  )
+
+print(grafica4)
+
+ggsave("barras_apiladas_frecuencia_genero.png",
+       width = 8, height = 5, dpi = 300, bg = "white")
+
+
+cat("\n¡Listo! Cuatro gráficas guardadas en tu carpeta:\n")
+cat("  → logit_probabilidad_genero.png\n")
+cat("  → logit_efectos_variables.png\n")
+cat("  → boxplot_estres_genero.png\n")
+cat("  → barras_apiladas_frecuencia_genero.png\n")
