@@ -73,7 +73,7 @@ en el bienestar de las personas.
 Esta gráfica muestra la probabilidad de experimentar una alta carga de
 trabajo doméstico y de cuidados según el género, si la persona estudia
 y si tiene hijes. Las barras rosas representan a mujeres y las azules
-a hombres. Se observa que las mujeres tienen una probabilidad más alta
+a hombres, se puede observa que las mujeres tienen una probabilidad más alta
 en todos los escenarios, lo que evidencia la desigualdad de género en
 la distribución del trabajo doméstico.
 
