@@ -77,7 +77,7 @@ a hombres. Se observa que las mujeres tienen una probabilidad más alta
 en todos los escenarios, lo que evidencia la desigualdad de género en
 la distribución del trabajo doméstico.
 
-![Gráfica 1](Trabajo%20dom%C3%A9stico.jpeg)
+![Gráfica 1](https://github.com/Coni-CadenaSan/Evaluacion-final-ProgrmacionR/blob/main/Trabajo%20domestico.jpeg?raw=true)
 
 ---
 
@@ -89,7 +89,7 @@ Las barras de error muestran la incertidumbre de cada estimación.
 Permite identificar qué factores tienen mayor peso en la experiencia
 de sobrecarga doméstica.
 
-![Gráfica 2](Trabajo%20dom%C3%A9stico%202.jpeg)
+![Gráfica 2](https://github.com/Coni-CadenaSan/Evaluacion-final-ProgrmacionR/blob/main/Trabajo%20domestico%202.jpeg?raw=true)
 
 ---
 
@@ -100,7 +100,7 @@ central de cada caja representa la mediana; la altura de la caja
 muestra la dispersión de las respuestas. Una caja más alta y ubicada
 hacia valores mayores indica mayor nivel de estrés reportado.
 
-![Gráfica 3](Trabajo%20dom%C3%A9stico%203.jpeg)
+![Gráfica 3](https://github.com/Coni-CadenaSan/Evaluacion-final-ProgrmacionR/blob/main/Trabajo%20domestico%203.jpeg?raw=true)
 
 ---
 
@@ -112,8 +112,7 @@ hombres y mujeres. Los colores van del verde (nunca) al rojo oscuro
 (siempre), permitiendo ver qué grupo reporta mayor restricción en su
 vida cotidiana.
 
-![Gráfica 4](trabajo%20dom%C3%A9stico%204.jpeg)
-
+![Gráfica 4](https://github.com/Coni-CadenaSan/Evaluacion-final-ProgrmacionR/blob/main/trabajo%20domestico%204.jpeg?raw=true)
 ---
 Este trabajo fue mejorado en formato con apoyo de IA Claude de Antrophic y DeepSeek, las cuales fueron herramientas para poder realizar esta publicación de manera más estetica y profesional, sin embargo no fue utilizada para el análisis y el plantamiento del tema del problema o tema, el cual surge de un interes personal de la alumna.
 
