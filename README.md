@@ -115,7 +115,6 @@ vida cotidiana.
 ![Gráfica 4](trabajo%20dom%C3%A9stico%204.jpeg)
 
 ---
-
-## 🛠️ Requisitos
+LEstre trabajo fue mejorado en fromato con apoyo de IA Claude de Antrophic y DeepSeek, las cuales fueron herramientas para poder realizar esta publicación de manera más estetica y profesiona, sin embargo no ha fue utilizada para el análisis y el plantamiento del tema de analisis, el cual surge de un interes perosnal de la alumna.
 
 ```r
