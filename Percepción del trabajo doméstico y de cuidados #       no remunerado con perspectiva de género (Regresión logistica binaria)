@@ -23,7 +23,7 @@ library(dplyr)
 library(ggplot2)
 
 
-# ── PASO 2: CARGAR LOS DATOS MANUALMENTE ─────────────────
+# ── PASO 2: CARGAR LOS DATOS ─────────────────
 # Datos propios de levantamiento (n = 42)
 #
 # Variables dicotómicas (0 = ausencia, 1 = presencia):
@@ -281,8 +281,4 @@ ggsave("barras_apiladas_frecuencia_genero.png",
        width = 8, height = 5, dpi = 300, bg = "white")
 
 
-cat("\n¡Listo! Cuatro gráficas guardadas en tu carpeta:\n")
-cat("  → logit_probabilidad_genero.png\n")
-cat("  → logit_efectos_variables.png\n")
-cat("  → boxplot_estres_genero.png\n")
-cat("  → barras_apiladas_frecuencia_genero.png\n")
+
