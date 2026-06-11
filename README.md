@@ -28,7 +28,7 @@ medida a través del impacto en el bienestar y el nivel de estrés reportados.
 
 ---
 
-## 🔢 Datos
+## Datos
 
 - **Fuente:** encuesta propia de levantamiento, aplicada de forma anónima realizada para mi evaluacion intermedia
   
@@ -40,7 +40,7 @@ medida a través del impacto en el bienestar y el nivel de estrés reportados.
 
 ---
 
-## ⚙️ Metodología
+##  Metodología
 
 Se utilizó un modelo de **regresión logística binaria (logit)**, el mismo
 aplicado en clase con la base de identidad política. Este modelo permite
@@ -67,7 +67,7 @@ en el bienestar de las personas.
 
 ---
 
-## 📈 Gráficas
+##  Gráficas
 
 ### 1. Probabilidad predicha de alta carga por género
 Esta gráfica muestra la probabilidad de experimentar una alta carga de
